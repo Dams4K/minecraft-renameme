@@ -1,0 +1,16 @@
+[
+  {
+    "modid": "rmm",
+    "name": "RenameMeMod",
+    "description": "Just a simple mod which rename you",
+    "version": "1.0",
+    "mcversion": "1.8.9",
+    "url": "",
+    "updateUrl": "",
+    "authorList": ["Dams4K"],
+    "credits": "Don't forget the unsubscribe button",
+    "logoFile": "",
+    "screenshots": [],
+    "dependencies": []
+  }
+]
