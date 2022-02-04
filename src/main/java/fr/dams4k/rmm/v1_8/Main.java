@@ -1,8 +1,8 @@
-package fr.dams4k.rmm;
+package fr.dams4k.rmm.v1_8;
 
-import fr.dams4k.rmm.configs.ModConfig;
-import fr.dams4k.rmm.proxy.ClientProxy;
-import fr.dams4k.rmm.utils.References;
+import fr.dams4k.rmm.v1_8.configs.ModConfig;
+import fr.dams4k.rmm.v1_8.proxy.ClientProxy;
+import fr.dams4k.rmm.v1_8.utils.References;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.SidedProxy;
@@ -15,7 +15,7 @@ public class Main {
     // TODO: remplacer dans le title, le scoreboard, etc..... https://hypixel.net/threads/how-to-remove-title-message-from-displaying.4049206/
     // TODO: rajouter un moyen de dire à partir de quel endroit on replace le mot, exemple: "Dams4K: i say §b§oDams4K
     //                                                                                                  i wrote Dams4K word
-    @SidedProxy(clientSide = "fr.dams4k.rmm.proxy.ClientProxy")
+    @SidedProxy(clientSide = "fr.dams4k.rmm.v1_8.proxy.ClientProxy")
     public static ClientProxy proxy;
 
     @EventHandler

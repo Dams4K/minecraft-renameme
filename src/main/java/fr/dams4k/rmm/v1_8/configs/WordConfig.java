@@ -1,4 +1,4 @@
-package fr.dams4k.rmm.configs;
+package fr.dams4k.rmm.v1_8.configs;
 
 public class WordConfig {
     private String wordReplaced = "";

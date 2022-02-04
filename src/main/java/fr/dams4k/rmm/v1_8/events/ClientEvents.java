@@ -1,4 +1,4 @@
-package fr.dams4k.rmm.events;
+package fr.dams4k.rmm.v1_8.events;
 
 import java.util.Collection;
 import java.util.UUID;
@@ -6,11 +6,11 @@ import java.util.regex.Pattern;
 
 import com.google.gson.JsonObject;
 
-import fr.dams4k.rmm.configs.ModConfig;
-import fr.dams4k.rmm.configs.WordConfig;
-import fr.dams4k.rmm.gui.GuiModConfig;
-import fr.dams4k.rmm.proxy.ClientProxy;
-import fr.dams4k.rmm.utils.JsonSimplifier;
+import fr.dams4k.rmm.v1_8.configs.ModConfig;
+import fr.dams4k.rmm.v1_8.configs.WordConfig;
+import fr.dams4k.rmm.v1_8.gui.GuiModConfig;
+import fr.dams4k.rmm.v1_8.proxy.ClientProxy;
+import fr.dams4k.rmm.v1_8.utils.JsonSimplifier;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.network.NetworkPlayerInfo;

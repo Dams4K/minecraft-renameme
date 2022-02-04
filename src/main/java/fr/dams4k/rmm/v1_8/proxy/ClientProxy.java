@@ -1,8 +1,8 @@
-package fr.dams4k.rmm.proxy;
+package fr.dams4k.rmm.v1_8.proxy;
 
 import org.lwjgl.input.Keyboard;
 
-import fr.dams4k.rmm.events.ClientEvents;
+import fr.dams4k.rmm.v1_8.events.ClientEvents;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.client.registry.ClientRegistry;

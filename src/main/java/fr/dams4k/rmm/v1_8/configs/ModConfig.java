@@ -1,4 +1,4 @@
-package fr.dams4k.rmm.configs;
+package fr.dams4k.rmm.v1_8.configs;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -10,7 +10,7 @@ import java.util.List;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
-import fr.dams4k.rmm.utils.JsonSimplifier;
+import fr.dams4k.rmm.v1_8.utils.JsonSimplifier;
 import net.minecraftforge.fml.common.Loader;
 
 public class ModConfig {

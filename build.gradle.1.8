@@ -20,7 +20,7 @@ plugins {
 }
 */
 version = "1.0"
-group= "fr.dams4k.rmm" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
+group= "fr.dams4k.rmm.v1_8" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "rmm"
 
 minecraft {
@@ -60,8 +60,15 @@ dependencies {
 
 }
 
-processResources
-{
+sourceSets {
+    main {
+        java {
+            exclude "fr/dams4k/rmm/v1_9"
+        }
+    }
+}
+
+processResources {
     // this will ensure that this task is redone when the versions change.
     inputs.property "version", project.version
     inputs.property "mcversion", project.minecraft.version

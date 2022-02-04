@@ -1,12 +1,12 @@
-package fr.dams4k.rmm.gui;
+package fr.dams4k.rmm.v1_8.gui;
 
 import java.io.IOException;
 import java.util.ArrayList;
 
 import com.google.gson.JsonObject;
 
-import fr.dams4k.rmm.configs.ModConfig;
-import fr.dams4k.rmm.utils.JsonSimplifier;
+import fr.dams4k.rmm.v1_8.configs.ModConfig;
+import fr.dams4k.rmm.v1_8.utils.JsonSimplifier;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 

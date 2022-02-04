@@ -1,4 +1,4 @@
-package fr.dams4k.rmm.gui;
+package fr.dams4k.rmm.v1_8.gui;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -7,7 +7,7 @@ import java.util.List;
 
 import com.google.gson.JsonObject;
 
-import fr.dams4k.rmm.utils.Utils;
+import fr.dams4k.rmm.v1_8.utils.Utils;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.GuiTextField;
 import net.minecraftforge.fml.client.config.GuiButtonExt;

@@ -1,4 +1,4 @@
-package fr.dams4k.rmm.gui;
+package fr.dams4k.rmm.v1_8.gui;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;

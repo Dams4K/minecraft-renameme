@@ -1,4 +1,4 @@
-package fr.dams4k.rmm.utils;
+package fr.dams4k.rmm.v1_8.utils;
 
 import java.io.FileReader;
 import java.io.FileWriter;
