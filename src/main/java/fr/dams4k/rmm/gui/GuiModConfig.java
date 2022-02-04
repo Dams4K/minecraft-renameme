@@ -27,6 +27,10 @@ public class GuiModConfig extends BaseGuiConfig {
             jsonGuiConfig = new ArrayList<JsonObject>();
             maxElementPerPage = height/27-2;
             
+            if (page > (ModConfig.configsJsonObjects.size()/maxElementPerPage)+1) {
+                page = ModConfig.configsJsonObjects.size()/maxElementPerPage;
+            }
+
             for (int i = maxElementPerPage * page; i < ModConfig.configsJsonObjects.size() && i < maxElementPerPage * (page +1); i++) {
                 if (ModConfig.configsJsonObjects.get(i).get("config") == null) continue;
                 JsonObject jsonObjectConfig = ModConfig.configsJsonObjects.get(i).get("config").getAsJsonObject();
@@ -55,11 +59,11 @@ public class GuiModConfig extends BaseGuiConfig {
 
             JsonObject pageIndicatorObject = new JsonObject();
             pageIndicatorObject.addProperty("type", "class fr.dams4k.rmm.gui.GuiText");
-            pageIndicatorObject.addProperty("posX", "{w}/2-{ew}/2");
-            pageIndicatorObject.addProperty("posY", Integer.toString((ModConfig.configsJsonObjects.size() + 1)*27) );
-            pageIndicatorObject.addProperty("text", "qsd");
-            // System.out.println((ModConfig.configsJsonObjects.size() + 1)*27);
-            // pageIndicatorObject.addProperty("text", page + "/" + ModConfig.configsJsonObjects.size()/maxElementPerPage);
+            pageIndicatorObject.addProperty("posX", "{w}/2-{tw}/2");
+            pageIndicatorObject.addProperty("posY", (maxElementPerPage+1)*27);
+            pageIndicatorObject.addProperty("color", "ffffff");
+            pageIndicatorObject.addProperty("text", page+1 + "/" + ((ModConfig.configsJsonObjects.size()/maxElementPerPage)+1));
+            
             jsonGuiConfig.add(pageIndicatorObject);
         } catch (Exception e) {
             e.printStackTrace();
