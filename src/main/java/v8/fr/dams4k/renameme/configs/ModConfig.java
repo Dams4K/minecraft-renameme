@@ -9,6 +9,7 @@ import java.util.stream.Stream;
 
 import fr.dams4k.renameme.References;
 import net.minecraftforge.fml.common.Loader;
+import scala.actors.threadpool.Arrays;
 
 public class ModConfig {
     public final static String MOD_FOLDER = Paths.get(Loader.instance().getConfigDir().getAbsolutePath(), References.MOD_ID).toString();
@@ -19,23 +20,34 @@ public class ModConfig {
         loadWordConfigs();
     }
     
-    private static List<File> getFilesFrom(String path) {
+    private static List<String> getFilesFrom(String path) {
         File dir = new File(path);
         if (!dir.isDirectory()) return new ArrayList<>();
 
-        return Stream.of(dir.listFiles()).filter(file -> file.isFile()).filter(file -> file.getName().endsWith(".cfg")).collect(Collectors.toList());
+        return Stream.of(dir.listFiles())
+            .filter(file -> file.isFile())
+            .filter(file -> file.getName().endsWith(".cfg"))
+            .map(File::getName)
+            .collect(Collectors.toList());
     }
 
     public static void loadWordConfigs() {
-        List<File> configFiles = ModConfig.getFilesFrom(MOD_FOLDER);
+        List<String> configFilenames = ModConfig.getFilesFrom(MOD_FOLDER);
 
-        for (File configFile : configFiles) {
-            WordConfig wordConfig;
-            wordConfig = new WordConfig(configFile);
+        for (String filename : configFilenames) {
+            String sId = filename.replace(".cfg", "");
+            try {
+                int id = Integer.parseInt(sId);
 
-            if (wordConfig.isDefault()) continue;
-            
-            wordConfigs.add(wordConfig);
+                WordConfig wordConfig = new WordConfig(id);
+                if (wordConfig.isDefault()) continue;
+
+                wordConfigs.add(wordConfig);
+            } catch (NumberFormatException e) {}
+        }
+
+        for (WordConfig c : wordConfigs) {
+            System.out.println(c.getId());
         }
     }
 }

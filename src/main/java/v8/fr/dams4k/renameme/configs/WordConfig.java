@@ -11,6 +11,8 @@ import net.minecraftforge.common.config.Property;
 public class WordConfig {
     private Configuration config;
    
+    private int id;
+
     private static final String D_ORIGINAL_WORD = "";
     private static final String D_FINAL_WORD = "";
 
@@ -23,15 +25,12 @@ public class WordConfig {
     private Property finalWordProperty;
 
     public WordConfig(int id) {
+        this.id = id;
+
         Path path = Paths.get(ModConfig.MOD_FOLDER, Integer.toString(id) + ".cfg");
         File configFile = new File(path.toString());
 
         config = new Configuration(configFile, References.MOD_VERSION);
-        this.load();
-    }
-
-    public WordConfig(File file) {
-        config = new Configuration(file, References.MOD_VERSION);
         this.load();
     }
 
@@ -49,20 +48,30 @@ public class WordConfig {
         if (config.hasChanged()) config.save();
     }
 
+    public int getId() {
+        return id;
+    }
+
     public void setOriginalWord(String originalWord) {
-        this.originalWord = originalWord;
+        this.originalWord = originalWord.replace("&", "§");
         this.save();
     }
     public void setFinalWord(String finalWord) {
-        this.finalWord = finalWord;
+        this.finalWord = finalWord.replace("&", "§");
         this.save();
     }
 
     public String getOriginalWord() {
         return originalWord;
     }
+    public String getUnformattedOriginalWord() {
+        return originalWord.replace("§", "&");
+    }
     public String getFinalWord() {
         return finalWord;
+    }
+    public String getUnformattedFinalWord() {
+        return finalWord.replace("§", "&");
     }
 
     public boolean isDefault() {
