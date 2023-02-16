@@ -2,6 +2,7 @@ package fr.dams4k.renameme.proxies;
 
 import org.lwjgl.input.Keyboard;
 
+import fr.dams4k.renameme.configs.ModConfig;
 import fr.dams4k.renameme.events.ModEventHandler;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraftforge.common.MinecraftForge;
@@ -12,6 +13,7 @@ public class ClientProxy extends CommonProxy {
 
     @Override
 	public void preInit() {
+        ModConfig.preInit();
 	}
 
 	@Override
