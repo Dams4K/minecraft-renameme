@@ -1,0 +1,16 @@
+[
+  {
+    "modid": "${mod_id}",
+    "name": "${mod_name}",
+    "description": "I don't like toxicity heheheha",
+    "version": "${mod_version}",
+    "mcversion": "${mc_version}",
+    "url": "${mod_github_url}",
+    "updateUrl": "",
+    "authorList": ["Dams4K"],
+    "credits": "",
+    "logoFile": "",
+    "screenshots": [],
+    "dependencies": []
+  }
+]
