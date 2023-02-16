@@ -9,7 +9,6 @@ import java.util.stream.Stream;
 
 import fr.dams4k.renameme.References;
 import net.minecraftforge.fml.common.Loader;
-import scala.actors.threadpool.Arrays;
 
 public class ModConfig {
     public final static String MOD_FOLDER = Paths.get(Loader.instance().getConfigDir().getAbsolutePath(), References.MOD_ID).toString();
@@ -32,22 +31,34 @@ public class ModConfig {
     }
 
     public static void loadWordConfigs() {
-        List<String> configFilenames = ModConfig.getFilesFrom(MOD_FOLDER);
+        wordConfigs.clear();
 
+        List<String> configFilenames = ModConfig.getFilesFrom(MOD_FOLDER);
         for (String filename : configFilenames) {
             String sId = filename.replace(".cfg", "");
             try {
                 int id = Integer.parseInt(sId);
 
                 WordConfig wordConfig = new WordConfig(id);
-                if (wordConfig.isDefault()) continue;
+                if (wordConfig.isDefault()) {
+                    wordConfig.delete();
+                } else {
+                    wordConfigs.add(wordConfig);
+                }
 
-                wordConfigs.add(wordConfig);
             } catch (NumberFormatException e) {}
         }
+    }
 
-        for (WordConfig c : wordConfigs) {
-            System.out.println(c.getId());
+    public static WordConfig createNewWordConfig() {
+        int id = 0;
+        for (WordConfig wordConfig : wordConfigs) {
+            if (id < wordConfig.getId()) {
+                id = wordConfig.getId();
+            }
         }
+        WordConfig newWordConfig = new WordConfig(id+1);
+        wordConfigs.add(newWordConfig);
+        return newWordConfig;
     }
 }

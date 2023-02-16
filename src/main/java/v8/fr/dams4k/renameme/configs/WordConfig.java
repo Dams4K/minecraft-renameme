@@ -77,4 +77,8 @@ public class WordConfig {
     public boolean isDefault() {
         return D_ORIGINAL_WORD == this.originalWord && D_FINAL_WORD == this.finalWord;
     }
+
+    public void delete() {
+        config.getConfigFile().delete();
+    }
 }
