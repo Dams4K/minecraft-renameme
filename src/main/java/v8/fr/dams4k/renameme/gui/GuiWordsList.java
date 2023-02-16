@@ -41,7 +41,7 @@ public class GuiWordsList extends ModGuiScreen {
         buttonList.add(leftButton);
 
         GuiButton rightButton = new GuiButton(3, width / 2 + buttonWidth / 2 + 5, height - 25, 20, 20, ">");
-        if (this.currentPage == this.getTotalPages(maximumButtonPerPage)) rightButton.enabled = false;
+        if (this.currentPage+1 == this.getTotalPages(maximumButtonPerPage)) rightButton.enabled = false;
         buttonList.add(rightButton);
     }
 
