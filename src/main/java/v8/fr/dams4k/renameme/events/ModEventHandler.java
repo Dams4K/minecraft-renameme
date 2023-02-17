@@ -1,6 +1,6 @@
 package fr.dams4k.renameme.events;
 
-import java.util.regex.Pattern;
+import java.util.regex.PatternSyntaxException;
 
 import fr.dams4k.renameme.configs.ModConfig;
 import fr.dams4k.renameme.configs.WordConfig;
@@ -39,8 +39,11 @@ public class ModEventHandler {
             String content = sibling.getUnformattedTextForChat();
         
             for (WordConfig wordConfig : ModConfig.wordConfigs) {
-                Pattern pattern = Pattern.compile("(?i)" + wordConfig.getOriginalWord());
-                content = pattern.matcher(content).replaceAll(wordConfig.getFinalWord());
+                try {
+                    content = wordConfig.format(content);
+                } catch (PatternSyntaxException e) {
+                    System.out.printf("%s isn't a valid regex expression\n", wordConfig.getOriginalWord());
+                }
             }
 
             IChatComponent renamedSibling = new ChatComponentText(content);

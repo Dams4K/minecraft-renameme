@@ -3,8 +3,14 @@ package fr.dams4k.renameme.configs;
 import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import fr.dams4k.renameme.References;
+import net.minecraft.client.Minecraft;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
 
@@ -32,6 +38,24 @@ public class WordConfig {
 
         config = new Configuration(configFile, References.MOD_VERSION);
         this.load();
+    }
+
+    public String format(String str) {
+        Pattern pattern = Pattern.compile(this.getOriginalWord());
+        Matcher matcher = pattern.matcher(str);
+
+        StringBuilder builder = new StringBuilder();
+
+        int lastIndex = 0;
+        while (matcher.find()) {
+            String original = matcher.group();
+            builder.append(str.subSequence(lastIndex, matcher.start()));
+            builder.append(this.getFinalWord(original));
+            lastIndex = matcher.end();
+        }
+        builder.append(str.subSequence(lastIndex, str.length()));
+
+        return builder.toString();
     }
 
     public void load() {
@@ -62,16 +86,56 @@ public class WordConfig {
     }
 
     public String getOriginalWord() {
-        return originalWord;
+        return replaceTokens(this.originalWord, Pattern.compile("\\$\\{(?<placeholder>[A-Za-z0-9-_]+)}"), match -> this.getPlaceholderValues().get(match.group("placeholder")));
     }
     public String getUnformattedOriginalWord() {
         return originalWord.replace("§", "&");
     }
-    public String getFinalWord() {
-        return finalWord;
+    public String getFinalWord(String original) {
+        Map<String, String> placeholderValues = this.getPlaceholderValues();
+        placeholderValues.put("original", original);
+
+        return replaceTokens(this.finalWord, Pattern.compile("\\$\\{(?<placeholder>[A-Za-z0-9-_]+)}"), match -> placeholderValues.get(match.group("placeholder")));
     }
+
     public String getUnformattedFinalWord() {
         return finalWord.replace("§", "&");
+    }
+
+    //- Thanks to Ashley Frieze for this method, very cool
+    public static String replaceTokens(String original, Pattern tokenPattern, Function<Matcher, String> converter) {
+        int lastIndex = 0;
+        StringBuilder output = new StringBuilder();
+        Matcher matcher = tokenPattern.matcher(original);
+        while (matcher.find()) {
+            output.append(original, lastIndex, matcher.start())
+                    .append(converter.apply(matcher));
+
+            lastIndex = matcher.end();
+        }
+        if (lastIndex < original.length()) {
+            output.append(original, lastIndex, original.length());
+        }
+        return output.toString();
+    }
+
+    public Map<String, String> getPlaceholderValues() {
+        Map<String, String> placeholderValues = new HashMap<>();
+        Minecraft mc = Minecraft.getMinecraft();
+        placeholderValues.put("username", mc.thePlayer.getName());
+        placeholderValues.put("uuid", mc.thePlayer.getUniqueID().toString());
+        placeholderValues.put("customnametag", mc.thePlayer.getCustomNameTag());
+        placeholderValues.put("displayname", mc.thePlayer.getDisplayNameString());
+        placeholderValues.put("health", Float.toString(mc.thePlayer.getHealth()));
+        placeholderValues.put("saturation", Float.toString(mc.thePlayer.getFoodStats().getSaturationLevel()));
+        placeholderValues.put("age", Float.toString(mc.thePlayer.getAge()));
+
+        if (mc.getCurrentServerData() != null) {
+            placeholderValues.put("serverip", mc.getCurrentServerData().serverIP);
+            placeholderValues.put("servername", mc.getCurrentServerData().serverName);
+        }
+
+        return placeholderValues;
     }
 
     public boolean isDefault() {

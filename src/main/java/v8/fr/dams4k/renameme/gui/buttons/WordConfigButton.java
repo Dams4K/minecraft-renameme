@@ -23,7 +23,7 @@ public class WordConfigButton implements ModButtonListener {
         int removeTextWidth = mc.fontRendererObj.getStringWidth(removeText);
         int removeButtonWidth = Math.max(removeTextWidth + 10, 20);
 
-        guiAccessButton = new ModButton(id, x, y, width - removeButtonWidth - 5, height, wordConfig.getFinalWord());
+        guiAccessButton = new ModButton(id, x, y, width - removeButtonWidth - 5, height, wordConfig.getFinalWord("placehoder"));
         removeButton = new ModConfirmButton(id + 1, x + width - removeButtonWidth, y, removeButtonWidth, height, removeText);
 
         guiAccessButton.addButtonListener(this);

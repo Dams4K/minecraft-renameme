@@ -53,7 +53,6 @@ public class GuiWordsList extends ModGuiScreen {
 
         String nextText = I18n.format("renameme.button.next", new Object[0]);
         int nextTextWidth = fontRendererObj.getStringWidth(nextText);
-        System.out.printf("t: %s w:%s\n", nextText, nextTextWidth);
         int nextButtonWidth = Math.max(nextTextWidth + 10, 20);
         GuiButton rightButton = new GuiButton(3, width / 2 + addButtonWidth / 2 + 5, height - 25, nextButtonWidth, 20, nextText);
         if (this.currentPage+1 == this.getTotalPages(maximumButtonPerPage)) rightButton.enabled = false;
