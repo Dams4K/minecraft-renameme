@@ -1,2 +1,12 @@
 renameme.key.opengui=Ouvrir l'interface de configuration
 renameme.category.renameme=RenameMe
+
+renameme.placeholder.find=Rechercher
+renameme.placeholder.replace_with=Remplacer avec
+
+renameme.button.cancel=Annuler
+renameme.button.ok=Valider
+renameme.button.previous=<
+renameme.button.next=>
+renameme.button.add=+
+renameme.button.remove=-

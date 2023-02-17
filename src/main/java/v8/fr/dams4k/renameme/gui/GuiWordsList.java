@@ -4,9 +4,11 @@ import java.io.IOException;
 
 import fr.dams4k.renameme.configs.ModConfig;
 import fr.dams4k.renameme.configs.WordConfig;
+import fr.dams4k.renameme.gui.buttons.ModButton;
 import fr.dams4k.renameme.gui.buttons.WordConfigButton;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiLabel;
+import net.minecraft.client.resources.I18n;
 
 public class GuiWordsList extends ModGuiScreen {
     private int currentPage = 0;
@@ -29,18 +31,31 @@ public class GuiWordsList extends ModGuiScreen {
 
         for (int i = 0; i + maximumButtonPerPage * this.currentPage < ModConfig.wordConfigs.size() && i < maximumButtonPerPage; i++) {
             WordConfig wordConfig = ModConfig.wordConfigs.get(i + maximumButtonPerPage * this.currentPage);
-            WordConfigButton wordConfigButton = new WordConfigButton(i+10, width / 2 - buttonWidth / 2, top + 10 + i*25, 150, 20, wordConfig);
-            buttonList.add(wordConfigButton);
+            WordConfigButton wordConfigButton = new WordConfigButton(i*2+10, width / 2 - buttonWidth / 2, top + 10 + i*25, 150, 20, wordConfig);
+            for (ModButton button : wordConfigButton.getButtons()) {
+                buttonList.add(button);
+            }
         }
 
         this.createPageLabel(this.currentPage+1, maximumButtonPerPage);
 
-        buttonList.add(new GuiButton(1, width / 2 - buttonWidth / 2, height - 25, 150, 20, "+"));
-        GuiButton leftButton = new GuiButton(2, width / 2 - buttonWidth / 2 - 25, height - 25, 20, 20, "<");
+        String addText = I18n.format("renameme.button.add", new Object[0]);
+        int addTextWidth = fontRendererObj.getStringWidth(addText);
+        int addButtonWidth = Math.max(addTextWidth + 10, 150);
+        buttonList.add(new GuiButton(1, width / 2 - addButtonWidth / 2, height - 25, addButtonWidth, 20, addText));
+
+        String previousText = I18n.format("renameme.button.previous", new Object[0]);
+        int previousTextWidth = fontRendererObj.getStringWidth(previousText);
+        int previousButtonWidth = Math.max(previousTextWidth + 10, 20);
+        GuiButton leftButton = new GuiButton(2, width / 2 - addButtonWidth / 2 - previousButtonWidth - 5, height - 25, previousButtonWidth, 20, previousText);
         if (this.currentPage == 0) leftButton.enabled = false;
         buttonList.add(leftButton);
 
-        GuiButton rightButton = new GuiButton(3, width / 2 + buttonWidth / 2 + 5, height - 25, 20, 20, ">");
+        String nextText = I18n.format("renameme.button.next", new Object[0]);
+        int nextTextWidth = fontRendererObj.getStringWidth(nextText);
+        System.out.printf("t: %s w:%s\n", nextText, nextTextWidth);
+        int nextButtonWidth = Math.max(nextTextWidth + 10, 20);
+        GuiButton rightButton = new GuiButton(3, width / 2 + addButtonWidth / 2 + 5, height - 25, nextButtonWidth, 20, nextText);
         if (this.currentPage+1 == this.getTotalPages(maximumButtonPerPage)) rightButton.enabled = false;
         buttonList.add(rightButton);
     }
@@ -57,7 +72,7 @@ public class GuiWordsList extends ModGuiScreen {
     }
 
     private int getTotalPages(int maximumButtonPerPage) {
-        return (int) Math.ceil(ModConfig.wordConfigs.size() / (float) maximumButtonPerPage);
+        return Math.max(1, (int) Math.ceil(ModConfig.wordConfigs.size() / (float) maximumButtonPerPage));
     }
 
     @Override
