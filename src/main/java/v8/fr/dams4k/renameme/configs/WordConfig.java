@@ -45,8 +45,8 @@ public class WordConfig {
         Matcher matcher = pattern.matcher(str);
 
         StringBuilder builder = new StringBuilder();
-
         int lastIndex = 0;
+        
         while (matcher.find()) {
             String original = matcher.group();
             builder.append(str.subSequence(lastIndex, matcher.start()));
@@ -86,7 +86,8 @@ public class WordConfig {
     }
 
     public String getOriginalWord() {
-        return replaceTokens(this.originalWord, Pattern.compile("\\$\\{(?<placeholder>[A-Za-z0-9-_]+)}"), match -> this.getPlaceholderValues().get(match.group("placeholder")));
+        Map<String, String> placeholderValues = this.getPlaceholderValues();
+        return this.replaceTokens(this.originalWord, Pattern.compile("\\$\\{(?<placeholder>[A-Za-z0-9-_]+)}"), match -> placeholderValues.get(match.group("placeholder")));
     }
     public String getUnformattedOriginalWord() {
         return originalWord.replace("§", "&");
@@ -95,15 +96,15 @@ public class WordConfig {
         Map<String, String> placeholderValues = this.getPlaceholderValues();
         placeholderValues.put("original", original);
 
-        return replaceTokens(this.finalWord, Pattern.compile("\\$\\{(?<placeholder>[A-Za-z0-9-_]+)}"), match -> placeholderValues.get(match.group("placeholder")));
+        return this.replaceTokens(this.finalWord, Pattern.compile("\\$\\{(?<placeholder>[A-Za-z0-9-_]+)}"), match -> placeholderValues.get(match.group("placeholder")));
     }
 
     public String getUnformattedFinalWord() {
         return finalWord.replace("§", "&");
     }
 
-    //- Thanks to Ashley Frieze for this method, very cool
-    public static String replaceTokens(String original, Pattern tokenPattern, Function<Matcher, String> converter) {
+    //- Thanks to Ashley Frieze for this code, very cool
+    public String replaceTokens(String original, Pattern tokenPattern, Function<Matcher, String> converter) {
         int lastIndex = 0;
         StringBuilder output = new StringBuilder();
         Matcher matcher = tokenPattern.matcher(original);
@@ -123,9 +124,10 @@ public class WordConfig {
         Map<String, String> placeholderValues = new HashMap<>();
         Minecraft mc = Minecraft.getMinecraft();
 
+        placeholderValues.put("username", mc.getSession().getUsername());
+        placeholderValues.put("uuid", mc.getSession().getPlayerID());
+
         if (mc.thePlayer != null) {
-            placeholderValues.put("username", mc.thePlayer.getName());
-            placeholderValues.put("uuid", mc.thePlayer.getUniqueID().toString());
             placeholderValues.put("customnametag", mc.thePlayer.getCustomNameTag());
             placeholderValues.put("displayname", mc.thePlayer.getDisplayNameString());
             placeholderValues.put("health", Float.toString(mc.thePlayer.getHealth()));

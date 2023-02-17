@@ -37,7 +37,7 @@ public class ModEventHandler {
 
         for (IChatComponent sibling : component) {
             String content = sibling.getUnformattedTextForChat();
-        
+
             for (WordConfig wordConfig : ModConfig.wordConfigs) {
                 try {
                     content = wordConfig.format(content);
