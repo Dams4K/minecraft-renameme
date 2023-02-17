@@ -122,13 +122,19 @@ public class WordConfig {
     public Map<String, String> getPlaceholderValues() {
         Map<String, String> placeholderValues = new HashMap<>();
         Minecraft mc = Minecraft.getMinecraft();
-        placeholderValues.put("username", mc.thePlayer.getName());
-        placeholderValues.put("uuid", mc.thePlayer.getUniqueID().toString());
-        placeholderValues.put("customnametag", mc.thePlayer.getCustomNameTag());
-        placeholderValues.put("displayname", mc.thePlayer.getDisplayNameString());
-        placeholderValues.put("health", Float.toString(mc.thePlayer.getHealth()));
-        placeholderValues.put("saturation", Float.toString(mc.thePlayer.getFoodStats().getSaturationLevel()));
-        placeholderValues.put("age", Float.toString(mc.thePlayer.getAge()));
+
+        if (mc.thePlayer != null) {
+            placeholderValues.put("username", mc.thePlayer.getName());
+            placeholderValues.put("uuid", mc.thePlayer.getUniqueID().toString());
+            placeholderValues.put("customnametag", mc.thePlayer.getCustomNameTag());
+            placeholderValues.put("displayname", mc.thePlayer.getDisplayNameString());
+            placeholderValues.put("health", Float.toString(mc.thePlayer.getHealth()));
+            placeholderValues.put("saturation", Float.toString(mc.thePlayer.getFoodStats().getSaturationLevel()));
+        }
+
+        if (mc.theWorld != null) {
+            placeholderValues.put("worldname", mc.theWorld.getProviderName());
+        }
 
         if (mc.getCurrentServerData() != null) {
             placeholderValues.put("serverip", mc.getCurrentServerData().serverIP);
