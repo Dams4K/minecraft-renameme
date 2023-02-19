@@ -2,6 +2,8 @@ package fr.dams4k.renameme.gui;
 
 import java.io.IOException;
 
+import org.lwjgl.input.Keyboard;
+
 import fr.dams4k.renameme.configs.ModConfig;
 import fr.dams4k.renameme.configs.WordConfig;
 import fr.dams4k.renameme.gui.buttons.ModButton;
@@ -28,6 +30,8 @@ public class GuiWordsList extends ModGuiScreen {
 
         int availableHeight = height - (top + 10) - 50;
         int maximumButtonPerPage = availableHeight / 25;
+
+        currentPage = this.clamp(currentPage, 0, this.getTotalPages(maximumButtonPerPage)-1);
 
         for (int i = 0; i + maximumButtonPerPage * this.currentPage < ModConfig.wordConfigs.size() && i < maximumButtonPerPage; i++) {
             WordConfig wordConfig = ModConfig.wordConfigs.get(i + maximumButtonPerPage * this.currentPage);
@@ -86,5 +90,22 @@ public class GuiWordsList extends ModGuiScreen {
             //- Right
             mc.displayGuiScreen(new GuiWordsList(currentPage+1));
         }
+    }
+
+    @Override
+    public void handleKeyboardInput() throws IOException {
+        super.handleKeyboardInput();
+
+        if (Keyboard.getEventKeyState()) {
+            if (Keyboard.getEventKey() == Keyboard.KEY_LEFT) {
+                mc.displayGuiScreen(new GuiWordsList(currentPage-1));
+            } else if (Keyboard.getEventKey() == Keyboard.KEY_RIGHT) {
+                mc.displayGuiScreen(new GuiWordsList(currentPage+1));
+            }
+        }
+    }
+
+    public int clamp(int value, int min, int max) {
+        return Math.max(min, Math.min(value, max));
     }
 }
