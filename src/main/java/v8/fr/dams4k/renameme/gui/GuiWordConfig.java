@@ -1,6 +1,7 @@
 package fr.dams4k.renameme.gui;
 
 import java.io.IOException;
+import java.util.List;
 
 import fr.dams4k.renameme.configs.WordConfig;
 import fr.dams4k.renameme.gui.buttons.ModTextField;
@@ -47,8 +48,17 @@ public class GuiWordConfig extends ModGuiScreen {
         toLabel.func_175202_a(txt);
         labelList.add(toLabel);
 
-        buttonList.add(new GuiButton(99, width / 2 - 75, top + 10 + 25 * 4, 70, 20, I18n.format("renameme.button.cancel", new Object[0])));
-        buttonList.add(new GuiButton(100, width / 2 + 5, top + 10 + 25 * 4, 70, 20, I18n.format("renameme.button.ok", new Object[0])));
+        String warningTxt = "§eWARNING, if \"find\" is blank, the string set in \"replace\" will show after every characters";
+        List<String> lines = fontRendererObj.listFormattedStringToWidth(warningTxt, 150);
+        int warningLabelHeight = (fontRendererObj.FONT_HEIGHT+1) * lines.size();
+        GuiLabel warningLabel = new GuiLabel(fontRendererObj, 4, width / 2 - 75, top + 10 + 25 *3, 150, warningLabelHeight, 0xffffff);
+        for (String str : lines) {
+            warningLabel.func_175202_a(str);
+        }
+        labelList.add(warningLabel);
+
+        buttonList.add(new GuiButton(99, width / 2 - 75, top + 10 + 25 * 3 + warningLabelHeight, 70, 20, I18n.format("renameme.button.cancel", new Object[0])));
+        buttonList.add(new GuiButton(100, width / 2 + 5, top + 10 + 25 * 3 + warningLabelHeight, 70, 20, I18n.format("renameme.button.ok", new Object[0])));
     }
 
     @Override
