@@ -49,9 +49,10 @@ public class GuiWordConfig extends ModGuiScreen {
         labelList.add(toLabel);
 
         String warningTxt = "§eWARNING, if \"find\" is blank, the string set in \"replace\" will show after every characters";
-        List<String> lines = fontRendererObj.listFormattedStringToWidth(warningTxt, 150);
-        int warningLabelHeight = (fontRendererObj.FONT_HEIGHT+1) * lines.size();
-        GuiLabel warningLabel = new GuiLabel(fontRendererObj, 4, width / 2 - 75, top + 10 + 25 *3, 150, warningLabelHeight, 0xffffff);
+        float warningTxtScale = 0.8f;
+        List<String> lines = fontRendererObj.listFormattedStringToWidth(warningTxt, Math.round(150 / warningTxtScale));
+        int warningLabelHeight = Math.round((fontRendererObj.FONT_HEIGHT+1) * lines.size() / warningTxtScale);
+        ModLabel warningLabel = new ModLabel(fontRendererObj, 4, width / 2 - 75, top + 10 + 25 * 3, 150, warningLabelHeight, 0xffffff, warningTxtScale);
         for (String str : lines) {
             warningLabel.func_175202_a(str);
         }

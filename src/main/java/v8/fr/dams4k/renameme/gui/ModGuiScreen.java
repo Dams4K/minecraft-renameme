@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.dams4k.colorpicker.ColorPicker;
 import fr.dams4k.renameme.References;
 import net.minecraft.client.gui.GuiLabel;
 import net.minecraft.client.gui.GuiScreen;
@@ -26,6 +27,9 @@ public class ModGuiScreen extends GuiScreen {
         GuiLabel titleLabel = new GuiLabel(mc.fontRendererObj, -1, width/2-mc.fontRendererObj.getStringWidth(title)/2, top-10, 150, 20, 0xffffff);
         titleLabel.func_175202_a(title);
         labelList.add(titleLabel);
+
+        ColorPicker colorPicker = new ColorPicker();
+        colorPicker.run();
     }
 
     @Override

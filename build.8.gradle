@@ -34,7 +34,9 @@ minecraft {
     makeObfSourceJar = true // an Srg named sources jar is made by default
 }
 
-dependencies {}
+dependencies {
+    compile fileTree(include: ["*.jar"], dir: "libs")
+}
 
 sourceSets {
     main {
